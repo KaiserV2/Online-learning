@@ -11,10 +11,13 @@ sigma = [1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0]
 simulation_length = 1000
 
 for i in range(10):
-    s = np.random.normal(mu[i], sigma[i], simulation_length)
+    s = []
+    for j in range (10):
+        temp = np.random.normal(mu[i], sigma[i], simulation_length)
+        temp = [x for x in temp]
+        s += temp
     f1.write("%s \n" %s)
 
-simulation_length //= 10
 
 for i in range(10):
     s = []
