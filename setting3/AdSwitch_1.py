@@ -2,15 +2,15 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-T = 20000
+T = 5000
 nbArms = 10 # arms 
 C1 = 16.1
 
 lower = 0
 amplitude = 20
 
-delta_t = 320 # trick to 
-delta_s = 80
+delta_t = 400 # trick to 
+delta_s = 100
 
 t = 0
 
@@ -79,15 +79,15 @@ if __name__ == "__main__":
 	lower = 10000000000
 	upper = 0
 	all_rewards_input = [{} for _ in range(nbArms)]
-	with open("dataset2.txt", "r") as f:
+	with open("dataset1.txt", "r") as f:
 		lines = f.readlines()
 		for t in range(len(lines)):
-			line = lines[t].split(' ')
+			line = lines[t].split(', ')
 			for i in range(nbArms):
 				lower = min(lower, float(line[i]))
 				upper = max(upper, float(line[i]))
 				# all_rewards_input[i][t+1] = (float(line[i]) - lower) / (upper - lower)
-				all_rewards_input[i][t+1] = float(line[i])
+				all_rewards_input[i][t+1] = float(line[i]) / 4
 
 	print(lower, upper)
 
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
 
 			# Receive reward r_t from input
-			total_reward += upper - (upper - lower) * all_rewards_input[chosen_arm][t]
+			total_reward += all_rewards_input[chosen_arm][t]
 			all_rewards[chosen_arm][t] = all_rewards_input[chosen_arm][t]
 			average_cumulative_rewards.append(total_reward / (t - t_l + 1))
 
